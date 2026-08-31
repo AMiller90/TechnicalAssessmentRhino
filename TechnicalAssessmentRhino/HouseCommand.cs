@@ -25,7 +25,40 @@ namespace TechnicalAssessmentRhino
 
         protected override Result RunCommand(RhinoDoc doc, RunMode mode)
         {
-            RhinoApp.WriteLine("House command is working!");
+            var getWidth = new GetNumber();
+            getWidth.SetCommandPrompt("Enter house width");
+            getWidth.SetDefaultNumber(10);
+
+            if (getWidth.Get() != GetResult.Number)
+                return getWidth.CommandResult();
+
+            double width = getWidth.Number();
+
+            RhinoApp.WriteLine($"House width: {width}");
+
+            var getdepth = new GetNumber();
+            getdepth.SetCommandPrompt("Enter house depth");
+            getdepth.SetDefaultNumber(8);
+
+            if (getdepth.Get() != GetResult.Number)
+                return getdepth.CommandResult();
+
+            double depth = getdepth.Number();
+
+            RhinoApp.WriteLine($"House depth: {depth}");
+
+            var getHeight = new GetNumber();
+            getHeight.SetCommandPrompt("Enter house height");
+            getHeight.SetDefaultNumber(8);
+
+            if (getHeight.Get() != GetResult.Number)
+                return getHeight.CommandResult();
+
+            double height = getHeight.Number();
+
+            RhinoApp.WriteLine($"House height: {height}");
+
+            RhinoApp.WriteLine($"House dimensions: Width={width}, Depth={depth}, Height={height}");
 
             return Result.Success;
         }
