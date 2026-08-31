@@ -74,6 +74,13 @@ namespace TechnicalAssessmentRhino
 
             RhinoApp.WriteLine($"House dimensions: Width={width}, Depth={depth}, Height={height}");
 
+            var box = new Box(Plane.WorldXY, new Interval(0, width), new Interval(0, depth), new Interval(0, height));
+
+            doc.Objects.AddBrep(box.ToBrep());
+            doc.Views.Redraw();
+
+            RhinoApp.WriteLine("House body created.");
+
             return Result.Success;
         }
     }
