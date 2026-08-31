@@ -6,6 +6,8 @@ using Rhino.Geometry;
 using Rhino.Input;
 using Rhino.Input.Custom;
 
+using TechnicalAssessmentRhino.Models;
+
 namespace TechnicalAssessmentRhino
 {
     public class HouseCommand : Command
@@ -72,10 +74,15 @@ namespace TechnicalAssessmentRhino
             }
             RhinoApp.WriteLine($"House height: {height}");
 
-            RhinoApp.WriteLine($"House dimensions: Width={width}, Depth={depth}, Height={height}");
+            var parameters = new HouseParameters(width, depth, height);
+
+            RhinoApp.WriteLine(
+                $"House dimensions: Width={parameters.Width}, " +
+                $"Depth={parameters.Depth}, " +
+                $"Height={parameters.Height}");
+
 
             var box = new Box(Plane.WorldXY, new Interval(0, width), new Interval(0, depth), new Interval(0, height));
-
             doc.Objects.AddBrep(box.ToBrep());
             doc.Views.Redraw();
 
