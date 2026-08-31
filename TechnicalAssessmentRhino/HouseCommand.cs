@@ -82,10 +82,14 @@ namespace TechnicalAssessmentRhino
             HouseBuilder builder = new HouseBuilder(parameters);
 
             var body = builder.BuildBody();
+            var roof = builder.BuildRoof();
+
             doc.Objects.AddBrep(body);
+            doc.Objects.AddBrep(roof);
+
             doc.Views.Redraw();
 
-            RhinoApp.WriteLine("House body created.");
+            RhinoApp.WriteLine("House body and roof created.");
 
             return Result.Success;
         }
