@@ -34,6 +34,11 @@ namespace TechnicalAssessmentRhino
 
             double width = getWidth.Number();
 
+            if(width <= 0)
+            {
+                RhinoApp.WriteLine("House width must be greater than zero.");
+                return Result.Failure;
+            }
             RhinoApp.WriteLine($"House width: {width}");
 
             var getdepth = new GetNumber();
@@ -44,7 +49,12 @@ namespace TechnicalAssessmentRhino
                 return getdepth.CommandResult();
 
             double depth = getdepth.Number();
-
+            
+            if (depth <= 0)
+            {
+                RhinoApp.WriteLine("House depth must be greater than zero.");
+                return Result.Failure;
+            }
             RhinoApp.WriteLine($"House depth: {depth}");
 
             var getHeight = new GetNumber();
@@ -55,7 +65,11 @@ namespace TechnicalAssessmentRhino
                 return getHeight.CommandResult();
 
             double height = getHeight.Number();
-
+            if (height <= 0)
+            {
+                RhinoApp.WriteLine("House height must be greater than zero.");
+                return Result.Failure;
+            }
             RhinoApp.WriteLine($"House height: {height}");
 
             RhinoApp.WriteLine($"House dimensions: Width={width}, Depth={depth}, Height={height}");
