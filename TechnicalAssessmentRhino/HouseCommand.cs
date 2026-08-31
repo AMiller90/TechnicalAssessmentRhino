@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using Rhino;
+﻿using Rhino;
 using Rhino.Commands;
-using Rhino.Geometry;
 using Rhino.Input;
 using Rhino.Input.Custom;
 
 using TechnicalAssessmentRhino.Models;
+using TechnicalAssessmentRhino.Geometry;
 
 namespace TechnicalAssessmentRhino
 {
@@ -81,9 +79,10 @@ namespace TechnicalAssessmentRhino
                 $"Depth={parameters.Depth}, " +
                 $"Height={parameters.Height}");
 
+            HouseBuilder builder = new HouseBuilder(parameters);
 
-            var box = new Box(Plane.WorldXY, new Interval(0, width), new Interval(0, depth), new Interval(0, height));
-            doc.Objects.AddBrep(box.ToBrep());
+            var body = builder.BuildBody();
+            doc.Objects.AddBrep(body);
             doc.Views.Redraw();
 
             RhinoApp.WriteLine("House body created.");
