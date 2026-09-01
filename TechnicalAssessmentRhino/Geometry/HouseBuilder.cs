@@ -1,4 +1,5 @@
 ﻿using Rhino.Geometry;
+using System;
 using TechnicalAssessmentRhino.Models;
 
 namespace TechnicalAssessmentRhino.Geometry
@@ -51,6 +52,33 @@ namespace TechnicalAssessmentRhino.Geometry
 
             var doorBox = new Box(Plane.WorldXY, new Interval(doorX, doorX + doorWidth), new Interval(-doorDepth, 0), new Interval(0, doorHeight));
             return doorBox.ToBrep();
+        }
+
+        public Brep BuildChimney()
+        {
+            double roofHeight = _parameters.Width * 0.4;
+
+            double chimneySize = Math.Min(_parameters.Width, _parameters.Depth) * 0.15;
+            double chimneyWidth = chimneySize;
+            double chimneyDepth = chimneySize;
+
+            double chimneyX = _parameters.Width * 0.65;
+            double chimneyCenterX = chimneyX + chimneyWidth / 2;
+
+            double chimneyCenterY = _parameters.Depth * 0.75;
+            double chimneyY = chimneyCenterY - chimneyDepth / 2;
+
+            double roofZ = _parameters.Height + roofHeight * (_parameters.Width - chimneyCenterX) / (_parameters.Width / 2);
+
+            double chimneyBottom = roofZ - 1.0;
+
+            double roofPeakZ = _parameters.Height + roofHeight;
+            double chimneyTop = roofPeakZ + _parameters.Height * 0.1;
+
+            double chimneyHeight = chimneyTop - chimneyBottom;
+
+            var chimneyBox = new Box(Plane.WorldXY, new Interval(chimneyX, chimneyX + chimneyWidth), new Interval(chimneyY, chimneyY + chimneyDepth), new Interval(chimneyBottom, chimneyBottom + chimneyHeight));
+            return chimneyBox.ToBrep();
         }
     }
 }

@@ -84,10 +84,12 @@ namespace TechnicalAssessmentRhino
             var body = builder.BuildBody();
             var roof = builder.BuildRoof();
             var door = builder.BuildDoor();
+            var chimney = builder.BuildChimney();
 
             doc.Objects.AddBrep(door);
             doc.Objects.AddBrep(body);
             doc.Objects.AddBrep(roof);
+            doc.Objects.AddBrep(chimney);
 
             doc.Views.Redraw();
 
