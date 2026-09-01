@@ -40,5 +40,17 @@ namespace TechnicalAssessmentRhino.Geometry
             var extrusion = Extrusion.Create(roofProfile, _parameters.Depth, true);
             return extrusion.ToBrep();
         }
+
+        public Brep BuildDoor()
+        {
+            double doorWidth = _parameters.Width * 0.2;
+            double doorHeight = _parameters.Height * 0.6;
+            double doorDepth = _parameters.Width * 0.05;
+
+            double doorX = (_parameters.Width - doorWidth) / 2;
+
+            var doorBox = new Box(Plane.WorldXY, new Interval(doorX, doorX + doorWidth), new Interval(-doorDepth, 0), new Interval(0, doorHeight));
+            return doorBox.ToBrep();
+        }
     }
 }
