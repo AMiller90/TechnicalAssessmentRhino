@@ -1,7 +1,6 @@
 ﻿using Rhino;
 using Rhino.Commands;
 using Rhino.Input;
-using Rhino.Input.Custom;
 
 using TechnicalAssessmentRhino.Geometry;
 using TechnicalAssessmentRhino.Models;
@@ -45,9 +44,9 @@ namespace TechnicalAssessmentRhino
                 break;
             }
 
-            parameters = preview.Parameters;
+            var finalParameters = preview.Parameters;
 
-            var builder = new HouseBuilder(parameters);
+            var builder = new HouseBuilder(finalParameters);
 
             var body = builder.BuildBody();
             var roof = builder.BuildRoof();

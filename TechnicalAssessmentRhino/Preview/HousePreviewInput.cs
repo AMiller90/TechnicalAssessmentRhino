@@ -1,6 +1,5 @@
 ﻿using DrawingColor = System.Drawing.Color;
 
-using Rhino;
 using Rhino.Input.Custom;
 
 using TechnicalAssessmentRhino.Geometry;
