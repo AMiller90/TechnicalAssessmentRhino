@@ -33,11 +33,11 @@ namespace TechnicalAssessmentRhino.Geometry
                 new Point3d(0, 0, height) // Starting Point - close profile
             };
 
-            // Create polyline from points. Connect them
+            // Create the closed triangular roof profile.
             var roofProfile = new Polyline(points).ToNurbsCurve();
             roofProfile.Reverse();
 
-            // Extrude based on depth - creates a prism
+            // Extrude the roof profile along the house depth.
             var extrusion = Extrusion.Create(roofProfile, _parameters.Depth, true);
             return extrusion.ToBrep();
         }

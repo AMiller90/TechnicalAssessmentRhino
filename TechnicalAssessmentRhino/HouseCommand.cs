@@ -3,8 +3,9 @@ using Rhino.Commands;
 using Rhino.Input;
 using Rhino.Input.Custom;
 
-using TechnicalAssessmentRhino.Models;
 using TechnicalAssessmentRhino.Geometry;
+using TechnicalAssessmentRhino.Models;
+using TechnicalAssessmentRhino.Preview;
 
 namespace TechnicalAssessmentRhino
 {
@@ -13,7 +14,7 @@ namespace TechnicalAssessmentRhino
         public HouseCommand()
         {
             // Rhino only creates one instance of each command class defined in a
-            // plug-in, so it is safe to store a refence in a static property.
+            // plug-in, so it is safe to store a reference in a static property.
             Instance = this;
         }
 
@@ -25,75 +26,42 @@ namespace TechnicalAssessmentRhino
 
         protected override Result RunCommand(RhinoDoc doc, RunMode mode)
         {
-            var getWidth = new GetNumber();
-            getWidth.SetCommandPrompt("Enter house width");
-            getWidth.SetDefaultNumber(10);
+            var parameters = new HouseParameters(10, 8, 8);
 
-            if (getWidth.Get() != GetResult.Number)
-                return getWidth.CommandResult();
+            var preview = new HousePreviewInput(parameters);
 
-            double width = getWidth.Number();
+            preview.SetCommandPrompt("Adjust the house or click to finish.");
 
-            if(width <= 0)
+            while (true)
             {
-                RhinoApp.WriteLine("House width must be greater than zero.");
-                return Result.Failure;
+                var result = preview.Get();
+
+                if (result == GetResult.Option)
+                    continue;
+
+                if (result != GetResult.Point)
+                    return preview.CommandResult();
+
+                break;
             }
-            RhinoApp.WriteLine($"House width: {width}");
 
-            var getdepth = new GetNumber();
-            getdepth.SetCommandPrompt("Enter house depth");
-            getdepth.SetDefaultNumber(8);
+            parameters = preview.Parameters;
 
-            if (getdepth.Get() != GetResult.Number)
-                return getdepth.CommandResult();
-
-            double depth = getdepth.Number();
-            
-            if (depth <= 0)
-            {
-                RhinoApp.WriteLine("House depth must be greater than zero.");
-                return Result.Failure;
-            }
-            RhinoApp.WriteLine($"House depth: {depth}");
-
-            var getHeight = new GetNumber();
-            getHeight.SetCommandPrompt("Enter house height");
-            getHeight.SetDefaultNumber(8);
-
-            if (getHeight.Get() != GetResult.Number)
-                return getHeight.CommandResult();
-
-            double height = getHeight.Number();
-            if (height <= 0)
-            {
-                RhinoApp.WriteLine("House height must be greater than zero.");
-                return Result.Failure;
-            }
-            RhinoApp.WriteLine($"House height: {height}");
-
-            var parameters = new HouseParameters(width, depth, height);
-
-            RhinoApp.WriteLine(
-                $"House dimensions: Width={parameters.Width}, " +
-                $"Depth={parameters.Depth}, " +
-                $"Height={parameters.Height}");
-
-            HouseBuilder builder = new HouseBuilder(parameters);
+            var builder = new HouseBuilder(parameters);
 
             var body = builder.BuildBody();
             var roof = builder.BuildRoof();
             var door = builder.BuildDoor();
             var chimney = builder.BuildChimney();
 
-            doc.Objects.AddBrep(door);
             doc.Objects.AddBrep(body);
             doc.Objects.AddBrep(roof);
+            doc.Objects.AddBrep(door);
             doc.Objects.AddBrep(chimney);
 
             doc.Views.Redraw();
 
-            RhinoApp.WriteLine("House body and roof created.");
+            RhinoApp.WriteLine("House created successfully.");
 
             return Result.Success;
         }
