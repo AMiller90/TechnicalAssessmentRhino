@@ -229,6 +229,69 @@ It uses RhinoCommon's GetPoint input mechanism together with OptionDouble option
 
 The temporary preview is drawn using Rhino's dynamic display functionality.
 
+Using the Release
+
+A Windows Rhino 8 plugin package is available from the GitHub Release:
+
+TechnicalAssessmentRhino v1.0.0
+
+Download:
+
+technicalassessmentrhino-1.0.0-rh8_0-win.yak
+
+Installing the Plugin
+
+The .yak package can be installed directly into Rhino 8.
+
+On Windows:
+
+Download the .yak file from the GitHub Release.
+Double-click the .yak file.
+Rhino will open and install the package.
+Restart Rhino if it was already running so the newly installed plugin is loaded.
+
+Alternatively, the package can be installed using Rhino's bundled Yak command-line tool:
+
+"C:\Program Files\Rhino 8\System\yak.exe" install <path-to-package>\technicalassessmentrhino-1.0.0-rh8_0-win.yak
+
+
+The plugin targets Rhino 8 for Windows.
+
+Using the House Command
+
+Once the plugin is installed:
+
+Open Rhino 8.
+Enter House in the Rhino command line.
+A live wireframe preview of the house appears.
+Use the Width, Depth, and Height command options to change the dimensions.
+The preview updates as the dimensions are changed.
+Click in the viewport to finish the command.
+The final house geometry is added to the Rhino document.
+
+The default dimensions are:
+
+Dimension	Default
+Width	10
+Depth	8
+Height	8
+
+The command options can be selected directly from the Rhino command line or entered by typing their names.
+
+Building and Running from Visual Studio
+
+For development, the project can also be opened in Visual Studio 2022 and launched using the Rhino debugging target.
+
+Open the solution in Visual Studio.
+Build the project.
+Start debugging.
+Rhino 8 launches as the debugging target.
+Enter House in the Rhino command line.
+Adjust the dimensions if required.
+Click in the viewport to finish the interactive input.
+
+This development workflow is separate from installing the packaged .yak release.
+
 Building the Project
 Requirements
 Windows
